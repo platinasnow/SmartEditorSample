@@ -28,7 +28,7 @@
 		<c:if test="${modify != 'true'}">
 			<button type="button" onclick="onWrite()">쓰기</button>
 		</c:if>
-		 <button type="button"> 취소</button>
+		 <button type="button" onclick="history.go(-1);"> 취소</button>
 		 <input type="hidden" name="seq" value="${board.seq}"/> 
 	</div>
 </form>

@@ -1,5 +1,10 @@
 package org.sample.se;
 
+import java.io.File;
+import java.util.Calendar;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.sample.se.Util.FileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +41,7 @@ public class HomeController {
 	public String writeSubmit(Model model, Board board) {
 		board.setBoardNum(1);
 		board.setAuthor(4);
+		board.setContents(board.getContents().replaceAll("\n", "").replaceAll("\t", "").replaceAll("\r", ""));
 		boardService.insertBoardItem(board);
 		return "redirect:view?seq="+board.getSeq();
 	}
@@ -55,18 +61,24 @@ public class HomeController {
 	
 	@RequestMapping(value = "/modifySubmit", method = RequestMethod.POST)
 	public String modifySubmit(Model model, Board board) {
+		board.setContents(board.getContents().replaceAll("\n", "").replaceAll("\t", "").replaceAll("\r", ""));
 		boardService.updateBoardItem(board);
 		return "redirect:view?seq="+board.getSeq();
 	}
 	
 	@RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
-	public String fileUpload(Model model, MultipartRequest multipartRequest){
+	public String fileUpload(Model model, MultipartRequest multipartRequest, HttpServletRequest request){
 		MultipartFile imgfile = multipartRequest.getFile("Filedata");
+		Calendar cal = Calendar.getInstance();
 		String fileName = imgfile.getOriginalFilename();
-		String path = "C:/Users/Snow/Documents/Develop/WorkSpace/SESample/src/main/webapp/resources";
-		FileUpload.fileUpload(imgfile, path, fileName);
+		String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+		String replaceName = cal.getTimeInMillis() + fileType;  
+		
+		//String path = "C:/Users/Snow/Documents/Develop/WorkSpace/SESample/src/main/webapp/resources";
+		String path = request.getSession().getServletContext().getRealPath("/")+File.separator+"resources";
+		FileUpload.fileUpload(imgfile, path, replaceName);
 		model.addAttribute("path", path);
-		model.addAttribute("filename", fileName);
+		model.addAttribute("filename", replaceName);
 		return "file_upload";
 	}
 
