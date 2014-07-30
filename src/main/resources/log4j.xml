@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- console -->
+	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="DateFormat" value="ISO8601"/>
+			<param name="TimeZoneID" value="GMT-8:00"/>
+			<param name="ConversionPattern" value="[%d] %-5p - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- log level -->
+	<logger name="org.springframework">
+		<level value="WARN" />
+	</logger>
+
+	<root>
+		<level value="TRACE" />
+		<appender-ref ref="stdout" />
+		<appender-ref ref="dailyLog" />
+	</root>
+
+</log4j:configuration>

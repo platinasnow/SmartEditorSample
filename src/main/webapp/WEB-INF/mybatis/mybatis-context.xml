@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:p="http://www.springframework.org/schema/p" 
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+	<bean id="propertyPlaceholderConfigurer"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <value>/WEB-INF/mybatis/jdbc.properties</value> 
+        </property>
+    </bean>
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="${mysql.jdbc.driver}"
+		p:url="${mysql.jdbc.url}"
+		p:username="${mysql.jdbc.username}"
+		p:password="${mysql.jdbc.password}"/> 
+		
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:mapperLocations="classpath*:org/sample/se/*.xml"
+		p:typeAliasesPackage="org.sample.se"
+		p:configLocation="/WEB-INF/mybatis/mybatisConfig.xml"/>	
+	
+	<bean id="sqlScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer" 
+		p:basePackage="org.sample.se"
+		p:sqlSessionFactoryBeanName="sqlSessionFactory" >
+	</bean>	
+	
+	<!-- 트랜잭션 매니저 -->
+	<bean id="transactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager" p:dataSource-ref="dataSource" />
+	<!-- Annotation 기반 트랜잭션 설정 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!-- 선언적 트렌젝션 사용 설정 -->
+	<tx:annotation-driven proxy-target-class="true"/>
+</beans>

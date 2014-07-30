@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.sample.se.BoardDAO">
+	
+	<select id="getBoardItem" resultType="Board">
+		SELECT 
+			boardNum,
+			seq,
+			title,
+			contents,
+			hit,
+			recodeDate, 
+			name
+		FROM board bo
+		JOIN userTable user
+			ON bo.author = user.pn
+		WHERE 
+			seq = #{seq}
+	</select>
+	
+	<select id="getBoardList" resultType="Board">
+		SELECT 
+			boardNum,
+			seq,
+			title,
+			contents,
+			hit,
+			recodeDate, 
+			name
+		FROM board bo
+		JOIN userTable user
+			ON bo.author = user.pn
+		WHERE 1=1
+			<if test="searchOption != null">
+				AND ${searchOption} LIKE CONCAT('%',#{searchInput},'%')
+			</if> 
+		ORDER BY seq DESC	
+		LIMIT #{currentItem } , #{itemPerPage}
+	</select>
+	
+	<select id="countBoardList" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM 
+			board
+		WHERE 1=1
+			<if test="searchOption != null">
+				AND ${searchOption} LIKE CONCAT('%',#{searchInput},'%')
+			</if> 	
+	</select>
+
+	<insert id="insertBoardItem" parameterType="Board" useGeneratedKeys="true" keyProperty="seq">
+		INSERT INTO 
+			BOARD(boardnum, title, contents, recodeDate, author)
+		VALUES(#{boardNum}, #{title}, #{contents}, sysdate(), #{author} )
+	</insert>
+
+	<update id="updateBoardItem" parameterType="Board">
+		UPDATE
+			BOARD
+		SET
+			title = #{title},
+			contents = #{contents}
+		WHERE 
+			seq = #{seq}
+	</update>
+	
+	<update id="deleteBoardItem" parameterType="Board">
+		
+	</update>
+	
+</mapper>	
