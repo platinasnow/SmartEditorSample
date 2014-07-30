@@ -9,39 +9,39 @@
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 <style type="text/css"> 
-	.title-wrap{height: 50px;margin: 100px 0 0;}
-	.contents{width:800px;margin: 100px auto;padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
-	.title-wrap{margin: 0 10px;padding: 20px; border-bottom: 1px solid #888;}
-	.contents-wrap{padding: 20px; min-height: 500px;}
-	.recode-wrap{text-align: right; margin: 5px 10px; color: #999;}
-	.hit-wrap{color:#999; margin: 20px 0;}
+
+	.contents-wrap{margin:30px 0 0 0;min-height: 500px;}
+	.contents{ margin: 60px 0 0 0;}
+	.recode-wrap{text-align: right; color: #888;}
+	.hit-wrap{color:#888; margin: 10px 0;}
+	.viewForm{margin: 20px 0 0 0;}
 </style>
 </head>
 
 <body>
-	<div class="container contents">
-		<div class="title-wrap">
-			${item.title }
-		</div>	
-		<div class="recode-wrap">
-			<fmt:formatDate value="${item.recodeDate }" pattern="yyyy-MM-dd"/> 
+	<div class="container ">
+		<div class="contents panel panel-success">
+			<div class="title-wrap panel-heading">
+				${item.title }
+			</div>	
+			<div class="panel-body">
+				<div class="recode-wrap">
+					${item.name } | <fmt:formatDate value="${item.recodeDate }" pattern="yyyy-MM-dd"/> 
+				</div>
+				<div class="contents-wrap">
+				${item.contents }
+				</div>
+				<div class="hit-wrap">
+					<b>조회수</b> ${item.hit }
+				</div>
+			</div>
 		</div>
-		
-		<div class="contents-wrap">
-			${item.contents }
-		</div>
-		
-		<div class="hit-wrap">
-			<b>조회수</b> ${item.hit }
-		</div>
-		
 		<form class="viewForm" method="post">
 			<input type="hidden" name="seq" value="${item.seq }" />
-		<button type="button" onclick="onModify()" class="btn btn-primary">수정</button>
-		<button type="button" onclick="onList()" class="btn btn-primary">목록</button>
-	</form>
+			<button type="button" onclick="onModify()" class="btn btn-primary">수정</button>
+			<button type="button" onclick="onList()" class="btn btn-primary">목록</button>
+		</form>	
 	</div>
-	
 	
 </body>
 <script type="text/javascript">

@@ -3,7 +3,7 @@ package org.sample.se.Util;
 public class Pagination {
 
 	private int itemPerPage = 10;
-	private int nextPage = 5;
+	private int nextPage = 10;
 	private int page = 1;
 	private int totalItemCount;
 
