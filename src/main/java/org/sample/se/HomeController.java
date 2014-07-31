@@ -41,7 +41,7 @@ public class HomeController {
 	public String writeSubmit(Model model, Board board) {
 		board.setBoardNum(1);
 		board.setAuthor(4);
-		board.setContents(board.getContents().replaceAll("\n", "").replaceAll("\t", "").replaceAll("\r", ""));
+		board.setContents(board.getContents().replaceAll("\n", "").replaceAll("\t", "").replaceAll("\r", "").replaceAll("'", "&apos;"));
 		boardService.insertBoardItem(board);
 		return "redirect:view?seq="+board.getSeq();
 	}
@@ -61,7 +61,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/modifySubmit", method = RequestMethod.POST)
 	public String modifySubmit(Model model, Board board) {
-		board.setContents(board.getContents().replaceAll("\n", "").replaceAll("\t", "").replaceAll("\r", ""));
+		board.setContents(board.getContents().replaceAll("\n", "").replaceAll("\t", "").replaceAll("\r", "").replaceAll("'", "&apos;"));
 		boardService.updateBoardItem(board);
 		return "redirect:view?seq="+board.getSeq();
 	}
