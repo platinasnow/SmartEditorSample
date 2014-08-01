@@ -1,6 +1,7 @@
 package org.sample.se;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,7 +68,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
-	public String fileUpload(Model model, MultipartRequest multipartRequest, HttpServletRequest request){
+	public String fileUpload(Model model, MultipartRequest multipartRequest, HttpServletRequest request) throws IOException{
 		MultipartFile imgfile = multipartRequest.getFile("Filedata");
 		Calendar cal = Calendar.getInstance();
 		String fileName = imgfile.getOriginalFilename();
@@ -75,7 +76,7 @@ public class HomeController {
 		String replaceName = cal.getTimeInMillis() + fileType;  
 		
 		//String path = "C:/Users/Snow/Documents/Develop/WorkSpace/SESample/src/main/webapp/resources";
-		String path = request.getSession().getServletContext().getRealPath("/")+File.separator+"resources";
+		String path = request.getSession().getServletContext().getRealPath("/")+File.separator+"resources/upload";
 		FileUpload.fileUpload(imgfile, path, replaceName);
 		model.addAttribute("path", path);
 		model.addAttribute("filename", replaceName);
