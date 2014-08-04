@@ -486,6 +486,7 @@
  	    	bAutoReset : true 											// 업로드한 직후에 파일폼을 리셋 시킬지 여부 (reset 메소드 수행)
  	    }).attach({
  	    	select : function(oCustomEvent) {
+ 	    		console.log('select');
  	    		//파일 선택이 완료되었을 때 발생
 // 		    	 oCustomEvent (이벤트 객체) = {
 // 	    			sValue (String) 선택된 File Input의 값

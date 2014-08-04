@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <html lang="ko">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -36,11 +36,12 @@ h1{color:#333;font-size:14px;letter-spacing:-1px}
 .pop_container .dsc{margin-top:6px;color:#666;line-height:18px}
 .pop_container .dsc_v1{margin-top:12px}
 .pop_container .dsc em{color:#13b72a}
-.pop_container2{padding:46px 60px 20px}
-.pop_container2 .dsc{margin-top:6px;color:#666;line-height:18px}
-.pop_container2 .dsc strong{color:#13b72a}
+.pop_container2,.pop_container{padding:46px 60px 20px}
+.pop_container2,.pop_container .dsc{margin-top:6px;color:#666;line-height:18px}
+.pop_container2,.pop_container .dsc strong{color:#13b72a}
 .upload{margin:0 4px 0 0;_margin:0;padding:6px 0 4px 6px;border:solid 1px #d5d5d5;color:#a1a1a1;font-size:12px;border-right-color:#efefef;border-bottom-color:#efefef;length:300px;}
 :root  .upload{padding:6px 0 2px 6px;}
+#drag_area{display: none;}
 </style>
 </head>
 <body>
@@ -57,51 +58,54 @@ h1{color:#333;font-size:14px;letter-spacing:-1px}
 	<div id="pop_container2" class="pop_container2">
     	<!-- content -->
 		<form id="editor_upimage" name="editor_upimage" action="../../../../fileUpload" method="post" enctype="multipart/form-data" onSubmit="return false;">
-        <div id="pop_content2">
-			<input type="file" class="upload" id="uploadInputBox" name="Filedata">
-            <p class="dsc" id="info"><strong>10MB</strong>이하의 이미지 파일만 등록할 수 있습니다.<br>(JPG, GIF, PNG, BMP)</p>
-        </div>
+	        <div id="pop_content2">
+				<input type="file" class="upload upload_input" id="uploadInputBox" name="Filedata">
+	            <p class="dsc" id="info"><strong>10MB</strong>이하의 이미지 파일만 등록할 수 있습니다.<br>(JPG, GIF, PNG, BMP)</p>
+	        </div>
 		</form>
-		<div id="pop_footer">
-	    <div class="btn_area">
-            <a href="javascript:imageUpload();"><img src="../../img/photoQuickPopup/btn_confirm.png" width="49" height="28" alt="확인" id="btn_confirm"></a>
-            <a href="#"><img src="../../img/photoQuickPopup/btn_cancel.png" width="48" height="28" alt="취소" id="btn_cancel"></a>
-        </div>
-    </div>
         <!-- //content -->
     </div>
     
     <div id="pop_container" class="pop_container" style="display:none;">
     	<!-- content -->
 		<form id="editor_upimage5" name="editor_upimage5" action="../../../../fileUpload" method="post" enctype="multipart/form-data" onSubmit="return false;">
-        <div id="pop_content2">
-			<input type="file" class="upload" id="uploadInputBox" name="Filedata">
+        <div id="pop_content">
+        <div class="drag_area" id="drag_area"></div>
+			<input type="file" class="upload upload_input5" id="uploadInputBox" name="Filedata"><span id="guide_text" class="bg"></span>
             <p class="dsc" id="info"><strong>10MB</strong>이하의 이미지 파일만 등록할 수 있습니다.<br>(JPG, GIF, PNG, BMP)</p>
         </div>
 		</form>
-		
-		<div id="pop_footer">
-	    <div class="btn_area">
-            <a href="javascript:imageUpload5();"><img src="../../img/photoQuickPopup/btn_confirm.png" width="49" height="28" alt="확인" id="btn_confirm"></a>
-            <a href="#"><img src="../../img/photoQuickPopup/btn_cancel.png" width="48" height="28" alt="취소" id="btn_cancel"></a>
-        </div>
-    </div>
         <!-- //content -->
+    </div>
+    <!-- footer -->
+    <div id="pop_footer">
+	    <div class="btn_area">
+            <a href="javascript:imageUpload();"><img src="../../img/photoQuickPopup/btn_confirm.png" width="49" height="28" alt="확인" id="btn_confirm"></a>
+            <a href="javascript:window.close();"><img src="../../img/photoQuickPopup/btn_cancel.png" width="48" height="28" alt="취소" id="btn_cancel"></a>
+        </div>
     </div>
     <!-- //footer -->
 </div>
+
 <script type="text/javascript" src="jindo.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="jindo.fileuploader.js" charset="utf-8"></script>
 <script type="text/javascript" src="attach_photo.js" charset="utf-8"></script>
-
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 </body>
 <script type="text/javascript">
 var imageUpload = function(){
-	document.editor_upimage.submit();
-}
-var imageUpload5 = function(){
-	document.editor_upimage5.submit();
-}
+	if(bSupportDragAndDropAPI){
+		if(document.getElementsByClassName('upload_input5').item().files.length > 0){
+			document.editor_upimage5.submit();	
+		}
+	}else{
+		if(document.getElementById('uploadInputBox').value != ""){
+			document.editor_upimage.submit();	
+		}
+	}
+};
+$('.upload_input5, .upload_input').change(function(e){
+	goStartMode();
+});
 </script>
-
 </html>

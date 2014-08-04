@@ -9,29 +9,35 @@
 
 <script type="text/javascript" src="resources/se/js/HuskyEZCreator.js" charset="utf-8" ></script>
 <script type="text/javascript" src="resources/se/js/jindo.min.js" charset="utf-8" ></script>
-
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<style type="text/css">
+#boardWriteForm{margin: 30px 0;}
+</style>
 </head>
 <body>
-
-<form id="boardWriteForm" method="post">
-	<div>
-		<div><b>제목</b></div>
-		<input type="text" id="title" name="title" value="" maxlength="100" style="width: 100%;"/>
-	</div>
-	<div class="contentDiv">
-	 	<textarea id="txtContent" name="contents" rows="30" style="width:100%;"></textarea>
-	</div>
-	<div class="buttonDiv">
-		<c:if test="${modify == 'true'}">
-			<button type="button" onclick="onModify()">수정</button>
-		</c:if>
-		<c:if test="${modify != 'true'}">
-			<button type="button" onclick="onWrite()">쓰기</button>
-		</c:if>
-		 <button type="button" onclick="history.go(-1);"> 취소</button>
-		 <input type="hidden" name="seq" value="${board.seq}"/> 
-	</div>
-</form>
+<div class="container">
+	<form id="boardWriteForm" method="post">
+		<div>
+			<div><b>제목</b></div>
+			<input type="text" id="title" name="title" value="" maxlength="100" style="width: 100%;"/>
+		</div>
+		<div class="contentDiv">
+		 	<textarea id="txtContent" name="contents" rows="30" style="width:100%;"></textarea>
+		</div>
+		<div class="buttonDiv">
+			<c:if test="${modify == 'true'}">
+				<button type="button" class="btn btn-primary" onclick="onModify()">수정</button>
+			</c:if>
+			<c:if test="${modify != 'true'}">
+				<button type="button" class="btn btn-primary" onclick="onWrite()">쓰기</button>
+			</c:if>
+			 <button type="button" class="btn btn-primary" onclick="history.go(-1);"> 취소</button>
+			 <input type="hidden" name="seq" value="${board.seq}"/> 
+		</div>
+	</form>
+</div>
 </body>
 <script type="text/javascript">
 var oEditors = [];
