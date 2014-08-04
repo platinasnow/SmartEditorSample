@@ -18,10 +18,10 @@
 	function fileAttach(){ 
 		var form = document.fileform;
 	    var fname = form.filename.value; 
-	    
 	    try{
-	    	window.opener.window.parent.pasteHTML(fname); 
-	    	window.close();
+    		window.opener.window.parent.pasteHTML(fname); 
+	    	window.close();	
+	    	
 	    }catch(e){alert('업로드에 실패했습니다.'); }
 	}
 	fileAttach();
