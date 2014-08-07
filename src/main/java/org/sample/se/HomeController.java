@@ -75,7 +75,6 @@ public class HomeController {
 		String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
 		String replaceName = cal.getTimeInMillis() + fileType;  
 		
-		//String path = "C:/Users/Snow/Documents/Develop/WorkSpace/SESample/src/main/webapp/resources";
 		String path = request.getSession().getServletContext().getRealPath("/")+File.separator+"resources/upload";
 		FileUpload.fileUpload(imgfile, path, replaceName);
 		model.addAttribute("path", path);

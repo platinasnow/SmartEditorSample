@@ -96,16 +96,33 @@ h1{color:#333;font-size:14px;letter-spacing:-1px}
 var imageUpload = function(){
 	if(bSupportDragAndDropAPI){
 		if($('.upload_input5')[0].files.length > 0){
-			document.editor_upimage5.submit();	
+			var file = $('.upload_input5').val();
+			if(validationType(file)){
+				document.editor_upimage5.submit();
+			}else{
+				alert('확장자가 부적절합니다.');				
+			}
 		}
 	}else{
-		if($('.upload_input').val() != ""){
-			document.editor_upimage.submit();	
+		var file = $('.upload_input').val();
+		if(file != ""){
+			if(validationType(file)){
+				document.editor_upimage.submit();
+			}else{
+				alert('확장자가 부적절합니다.');				
+			}
 		}
 	}
 };
 $('.upload_input5, .upload_input').change(function(e){
 	goStartMode();
 });
+
+var validationType = function(fileName){
+	var type = fileName.substring(fileName.lastIndexOf('.')+1, fileName.length);
+	if(type.toUpperCase() == 'JPG' || type.toUpperCase() == 'GIF' || type.toUpperCase() == 'PNG' || type.toUpperCase() == 'BMP'){
+		return true;
+	}
+}
 </script>
 </html>
